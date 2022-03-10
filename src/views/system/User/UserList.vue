@@ -131,13 +131,14 @@ export default {
     // 获取用户列表
     async getUserList() {
       if (this.getUserListByDeptIdApiParams.deptId === 1) {
-        // TODO 这个地方需要重新修改
+        // TODO 这个地方需要重新修改,这个if应该删掉,后台需要通过部门的likeid去获取用户
         const { data: res } = await getUserListApi()
         if (res && res.code === 200) {
           this.userList = res.data
           //this.total = res.data.total
         }
       } else {
+        // 通过部门id和分页信息获取用户列表
         const params = {
           deptId: this.getUserListByDeptIdApiParams.deptId,
           currentPage: this.getUserListByDeptIdApiParams.currentPage,

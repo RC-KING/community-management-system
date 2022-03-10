@@ -1,0 +1,3 @@
+1.删除 xxx 的 params
+const res = await deleteRoleApi({ id: row.id }) 
+2.注意 get 和 restFulGet 的区别 3.注意 get 请求不支持 requestBody 传参

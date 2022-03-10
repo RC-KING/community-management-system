@@ -2,14 +2,25 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 信息提示
+import MessageUtils from '../src/utils/MessageUtils'
 import ElementUI from 'element-ui'; //引入element组件库
 import 'element-ui/lib/theme-chalk/index.css'; //引入element样式文件
 import Cookies from 'js-cookie'//cookie
 import Fragment from 'vue-fragment'
+// 引入清空表单工具类
+import resetForm from './utils/resetForm'
+// 快速复制对象工具类
+import objCopy from './utils/objCopy'
 Vue.use(Fragment.Plugin)
 Vue.use(ElementUI); //使用element
+// 自定义挂载表单重置工具类
+Vue.prototype.$resetForm = resetForm
 Vue.config.productionTip = false
-
+// 自定义挂载$message
+Vue.prototype.$message = MessageUtils
+// 自定义挂载快速复制对象数据工具类
+Vue.prototype.$objCopy = objCopy
 //定义白名单
 const whiteList = ['/login', "/"];
 // 每次路由变化之前的操作

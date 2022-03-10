@@ -58,6 +58,9 @@ const http = {
       }
     })
   },
+  // 这个是普通风格的get请求
+  // parm =>  {id:10}
+  // http://localhost:8089/api/user?id=10
   get(url, params) {
     return service.get(url, {
       params: params,

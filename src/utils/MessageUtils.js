@@ -41,6 +41,7 @@ var MessageUtils = {
         resolve(true)
       }).catch(() => {
         Message.warning('已取消')
+        reject()
       })
     })
   }
