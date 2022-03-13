@@ -1,3 +1,38 @@
 1.删除 xxx 的 params
 const res = await deleteRoleApi({ id: row.id }) 
-2.注意 get 和 restFulGet 的区别 3.注意 get 请求不支持 requestBody 传参
+2.注意 get 和 restFulGet 的区别 3.注意 get 请求不支持 requestBody 传参 
+
+3. 关于RestGetApi
+  这个是路径传参
+  ### 前端请求
+  // 通过部门id和分页信息获取用户列表
+  const params = {
+    deptId: this.getUserListByDeptIdApiParams.deptId,
+    currentPage: this.getUserListByDeptIdApiParams.currentPage,
+    pageSize: this.getUserListByDeptIdApiParams.pageSize
+  }
+  const { data: res } = await getUserListByDeptIdApi(params)
+  console.log(res.data.records)
+  if (res && res.code === 200) {
+    this.userList = res.data.records
+    //this.total = res.data.total
+  }
+  ===================================================================
+  // 根据部门id获取用户列表
+  export async function getUserListByDeptIdApi(params) {
+    return await http.getRestApi("/api/sys_user/list", params);
+  }
+
+  #### 后端代码
+ // 这样的路径传参格式,前端传入参数的时候需要注意,不能使用普通的get请求,会报错
+  @SysLog(value = "根据部门Id获取用户列表")
+  @ApiOperation(value = "根据部门Id获取用户列表")
+  @ApiImplicitParams({@ApiImplicitParam(name = "deptId",required = true,value = "部门Id")})
+  @GetMapping("/list/{deptId}/{currentPage}/{pageSize}")
+  public ResultVo getTablesList(@PathVariable(value = "deptId") Long deptId,
+                                @PathVariable(value = "currentPage") Long currentPage,
+                                @PathVariable(value = "pageSize") Long pageSize){
+    IPage<SysUser> tablesList = sysUserService.getUserList(currentPage,pageSize,deptId);
+    System.out.println(tablesList.getTotal());
+    return ResultUtils.success("查询成功!",tablesList);
+  }

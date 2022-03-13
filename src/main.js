@@ -2,11 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 按钮权限判断工具
+import hasPermission from '../src/permission'
 // 信息提示
 import MessageUtils from '../src/utils/MessageUtils'
 import ElementUI from 'element-ui'; //引入element组件库
 import 'element-ui/lib/theme-chalk/index.css'; //引入element样式文件
-import Cookies from 'js-cookie'//cookie
+// cookie操作
+import { getToken, removeToken, removeUserId, removeSession, removeTokenTime } from './utils/auth'
 import Fragment from 'vue-fragment'
 // 引入清空表单工具类
 import resetForm from './utils/resetForm'
@@ -21,12 +24,15 @@ Vue.config.productionTip = false
 Vue.prototype.$message = MessageUtils
 // 自定义挂载快速复制对象数据工具类
 Vue.prototype.$objCopy = objCopy
+// 自定义挂载按钮权限判断工具
+Vue.prototype.$hasPermission = hasPermission
 //定义白名单
 const whiteList = ['/login', "/"];
 // 每次路由变化之前的操作
 router.beforeEach(async (to, from, next) => {
   //获取token
-  let token = Cookies.get("token");
+  // 1.获取token
+  const token = getToken()
 
   if (token) {
     console.log('token存在!');
@@ -49,7 +55,15 @@ router.beforeEach(async (to, from, next) => {
           console.log('从服务器获取数据')
           await store.dispatch('getAuthList', router)
         } catch (error) {
-          console.log('发生异常', error)
+          console.log('发生异常')
+          // 发生异常
+          console.log(error)
+          // 移除token
+          removeToken()
+          // 移除用户id
+          removeUserId()
+          removeSession()
+          removeTokenTime()
           // 重定向到登录页面
           next({ path: '/' })
         }

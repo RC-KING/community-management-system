@@ -37,7 +37,7 @@
 
 <script>
 import { loginApi, getImageApi } from '../api/user'
-import Cookies from 'js-cookie'
+import { setToken, setUserId, setTokenTime } from '../utils/auth'
 export default {
   name: 'Login',
   data() {
@@ -66,8 +66,12 @@ export default {
           // 登录成功
           if (res.code === 200) {
             this.$message.success('登陆成功')
-            Cookies.set('token', res.token)
-            console.log('去往/home/desktop')
+            // 设置tokne
+            setToken(res.token)
+            // 设置token过期时间
+            setTokenTime(res.expireTime)
+            // 设置用户id
+            setUserId(res.id)
             window.location.href = '/home/desktop'
           } else {
             this.$message.error(res.msg)

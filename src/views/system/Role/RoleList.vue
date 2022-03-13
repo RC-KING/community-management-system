@@ -57,7 +57,8 @@
 </template>
 
 <script>
-// TODO:Cookie中获取角色ID import { getUserId } from '../../../utils/auth'
+// TODO:Cookie中获取角色ID
+import { getUserId } from '../../../utils/auth'
 // import { getRoleListApi, addRoleApi, editRoleApi, deleteRoleApi, getGrantTreeApi, grantTreeApi } from '../../../api/role'
 import SysDialog from '../../../components/SysDialog.vue'
 import { getRoleListApi, deleteRoleApi, addRoleApi, editRoleApi, getAssignPermissionTree, roleAssignSave } from '../../../api/role'
@@ -142,8 +143,8 @@ export default {
     },
     // 获取角色列表
     async getRoleList() {
-      this.roleModel.createUser = '11' //TODO:这里写死了
-      this.paginationParams.userId = '11' //TODO:这里写死了
+      this.roleModel.createUser = getUserId()
+      this.paginationParams.userId = getUserId()
       const { data: res } = await getRoleListApi(this.paginationParams)
       if (res && res.code === 200) {
         this.roleList = res.data.records

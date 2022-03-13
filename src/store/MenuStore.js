@@ -106,6 +106,10 @@ export default {
       let menuList = res.data.menuList;
       //获取路由数据
       let routerList = res.data.routerList;
+      // 获取权限字段(控制按钮)
+      const authList = res.data.authList
+      console.log('即将存入')
+      sessionStorage.setItem('authList', JSON.stringify(authList))
       //菜单数据存储到store
       commit('setMenuList', menuList)
       //路由数据存储到store

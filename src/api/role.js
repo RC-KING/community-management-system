@@ -1,5 +1,6 @@
 import http from '../utils/request'
-// 获取角色列表(//TODO:根据用户Id来查询)
+// 获取角色列表
+//TODO:根据用户Id来查询
 export async function getRoleListApi(params) {
   return await http.post('/api/sys_role/list', params)
 }
