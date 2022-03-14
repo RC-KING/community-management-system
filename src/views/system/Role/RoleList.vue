@@ -57,7 +57,6 @@
 </template>
 
 <script>
-// TODO:Cookie中获取角色ID
 import { getUserId } from '../../../utils/auth'
 // import { getRoleListApi, addRoleApi, editRoleApi, deleteRoleApi, getGrantTreeApi, grantTreeApi } from '../../../api/role'
 import SysDialog from '../../../components/SysDialog.vue'
@@ -93,7 +92,7 @@ export default {
         currentPage: 1, // 当前页码
         pageSize: 10, // 每页的数据条数容量
         total: 0, // 数据总条数
-        userId: '11' // 用户Id TODO:这里写死了,需要从Cookis中获取
+        userId: getUserId() // 用户Id TODO:这里写死了,需要从Cookis中获取
       },
       // 表格高度
       tableHeight: 0,
