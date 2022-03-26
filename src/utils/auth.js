@@ -29,6 +29,8 @@ export function getUserId() {
 export function removeUserId() {
   Cookies.remove(userIdKey)
 }
+
+
 // 清除sessionStorage
 export function removeSession() {
   sessionStorage.clear()

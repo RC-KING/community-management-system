@@ -16,3 +16,5 @@ export async function editClubApi(param) {
 export async function deleteClubApi(params) {
   return await http.delete('/api/club', params)
 }
+
+

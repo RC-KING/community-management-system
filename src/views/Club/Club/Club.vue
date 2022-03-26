@@ -37,7 +37,7 @@
       <!-- 搜索框 -->
       <el-form :model="paginationParams" label-width="80px" :inline="true" size="small">
         <el-form-item>
-          <el-input v-model="paginationParams.name" placeholder="请输入社团名称"></el-input>
+          <el-input v-model="paginationParams.searchKeyWord" placeholder="请输入社团名称"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" icon="el-icon-search" @click="searchclub">查询</el-button>
@@ -49,6 +49,7 @@
       <!-- 社团列表 -->
       <el-table :height="tableHeight" :data="clubList" border stripe>
         <el-table-column prop="name" label="社团名称"></el-table-column>
+        <!-- //TODO:这个地方应该是显示logo的图片 -->
         <el-table-column prop="logo" label="社团logo"></el-table-column>
         <el-table-column prop="managerName" label="社团管理员"></el-table-column>
         <el-table-column prop="guideTeacher" label="社团指导老师"></el-table-column>
@@ -71,8 +72,6 @@
   </div>
 </template>
 <script>
-import { getUserId } from '../../../utils/auth'
-
 import SysDialog from '../../../components/SysDialog.vue'
 import { getClubListApi, deleteClubApi, addClubApi, editClubApi } from '../../../api/club'
 export default {
@@ -84,7 +83,7 @@ export default {
       clubList: [],
       // 社团分页查询数据域
       paginationParams: {
-        name: '',
+        searchKeyWord: '',
         currentPage: 1, // 当前页码
         pageSize: 10, // 每页的数据条数容量
         total: 0 // 数据总条数
@@ -107,9 +106,9 @@ export default {
         intro: 'xxx',
         details: 'xx',
         address: 'xxx',
-        manager_name: 'jdd',
-        guide_teacher: 'jxx',
-        guide_teacher_phone: '1111111',
+        managerName: 'jdd',
+        guideTeacher: 'jxx',
+        guideTeacherPhone: '1111111',
         editType: '' // 标识
       },
       // 添加社团表单验证
@@ -125,8 +124,6 @@ export default {
   methods: {
     // 获取社团列表
     async getClubList() {
-      this.clubModel.createUser = getUserId()
-      this.paginationParams.userId = getUserId()
       const { data: res } = await getClubListApi(this.paginationParams)
       console.log(res)
       if (res && res.code === 200) {
@@ -188,7 +185,7 @@ export default {
     },
     // 重置社团搜索框
     resetSearchFrom() {
-      this.paginationParams.name = ''
+      this.paginationParams.searchKeyWord = ''
       this.paginationParams.currentPage = 1
       this.getClubList(this.paginationParams)
     },

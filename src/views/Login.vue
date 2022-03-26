@@ -62,7 +62,7 @@ export default {
         // 表单验证通过
         if (valid) {
           const { data: res } = await loginApi(this.loginForm)
-          console.log(res)
+          console.log('登录成功,返回的数据:', res)
           // 登录成功
           if (res.code === 200) {
             this.$message.success('登陆成功')
