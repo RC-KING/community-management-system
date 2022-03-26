@@ -38,3 +38,10 @@ const res = await deleteRoleApi({ id: row.id })
   }
 
 
+git reset --hard 981efd94f2752d5178b10ca01402c8964086fcf7
+
+git push https://github.com/RC-KING/community_management_system.git –-force
+git push https://github.com/RC-KING/community_management_system.git master --force
+git push -u master origin -f
+
+ git reset --hard 8f96d46
